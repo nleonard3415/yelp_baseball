@@ -1,0 +1,49 @@
+<%- include("partials/header") %>
+<div class="container">
+	<h1>Edit Team</h1>
+<form action="/teams/<%= team._id %>?_method=PUT" method="POST">
+  <div class="form-group">
+    <label for="title">Team</label>
+    <input type="text" class="form-control" name="title" value="<%= team.title %>">
+  </div>
+	<div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" name="description" value="<%= team.description %>">
+  </div>
+	<div class="form-group">
+    <label for="owner">Owner</label>
+    <input type="text" class="form-control" name="owner" value="<%= team.owner %>">
+  </div>
+	<div class="form-group">
+    <label for="manager">Manager</label>
+    <input type="text" class="form-control" name="manager" value="<%= team.manager %>">
+  </div>
+	<div class="form-group">
+    <label for="date">Date</label>
+    <input type="date" class="form-control" name="date" value="<%= team.date %>">
+  </div>
+	<div class="form-group">
+    <label for="wins">Wins</label>
+    <input type="number" class="form-control" name="wins" value="<%= team.wins %>">
+  </div>
+	<div class="form-group">
+    <label for="league">League</label>
+    <select class="form-control" id="league" name="league">
+		<option disabled>-- Choose Below Options --</option>
+		<option <%= team.league === 'american league' ? 'selected' : '' %>>American League</option>
+		<option <%= team.league === 'national league' ? 'selected' : '' %>>National League</option>
+		</select>
+  </div>
+	<div class="form-group form-check">
+	<input type="checkbox" class="form-check-input" name="good" <%= team.good ? 'checked' : '' %>>
+    <label for="good">Good?</label>
+  </div>
+  <div class="form-group">
+    <label for="image">Link to Image</label>
+    <input type="text" class="form-control" name="image_link" value="<%= team.image_link %>">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+	</div>
+	
+<%- include("partials/footer") %>

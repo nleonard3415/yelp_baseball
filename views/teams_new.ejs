@@ -1,0 +1,49 @@
+<%- include("partials/header") %>
+<div class="container">
+	<h1>Add New Team</h1>
+<form action="/teams" method="POST">
+  <div class="form-group">
+    <label for="title">Team</label>
+    <input type="text" class="form-control" name="title" placeholder="e.g. Red Sox" autofocus>
+  </div>
+	<div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" name="description">
+  </div>
+	<div class="form-group">
+    <label for="owner">Owner</label>
+    <input type="text" class="form-control" name="owner">
+  </div>
+	<div class="form-group">
+    <label for="manager">Manager</label>
+    <input type="text" class="form-control" name="manager">
+  </div>
+	<div class="form-group">
+    <label for="date">Date</label>
+    <input type="date" class="form-control" name="date">
+  </div>
+	<div class="form-group">
+    <label for="wins">Wins</label>
+    <input type="number" class="form-control" name="wins">
+  </div>
+	<div class="form-group">
+    <label for="league">League</label>
+    <select class="form-control" id="league" name="league">
+		<option disabled selected>-- Choose Below Options --</option>
+		<option>American League</option>
+		<option>National League</option>
+		</select>
+  </div>
+	<div class="form-group form-check">
+	<input type="checkbox" class="form-check-input" name="good">
+    <label for="good">Good?</label>
+  </div>
+  <div class="form-group">
+    <label for="image">Link to Image</label>
+    <input type="text" class="form-control" name="image_link" placeholder="https://www.myimage.com">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+	</div>
+	
+<%- include("partials/footer") %>
