@@ -39,11 +39,11 @@ router.post("/", isLoggedIn, async (req, res)=>{
 	
 	try{
 		const team = await Team.create(newTeam);
-		console.log(team);
+		req.flash("success", "Team Created");
 		res.redirect("/teams/" + team._id);
 	}catch(err){
-		console.log(err);
-		res.send("you broke it .... /index");
+		req.flash("error", "error creating flash");
+		res.redirect("/teams");
 	}
 })
 
@@ -108,11 +108,12 @@ router.put("/:id", checkTeamOwner, async (req, res)=>{
 		image_link: req.body.image_link
 	}
 	try{
-		const team = await Team.findByIdAndUpdate(req.params.id, updatedTeam, {new: true}).exec()
+		const team = await Team.findByIdAndUpdate(req.params.id, updatedTeam, {new: true}).exec();
+		req.flash("succes", "Team updated")
 		res.redirect(`/teams/${req.params.id}`)
 	}catch(err){
-		console.log(err);
-		res.send("you broke it .... /teams/:id PUT")
+		req.flash("error", "error updating team")
+		res.redirect("/teams")
 	}
 })
 
@@ -120,11 +121,11 @@ router.delete("/:id", checkTeamOwner, async (req, res)=>{
 	
 	try{
 		const deletedTeam = await Team.findByIdAndDelete(req.params.id).exec()
-		console.log("Deleted: ", deletedTeam);
+		req.flash("success", "Team Deleted");
 		res.redirect("/teams");
 	}catch(err){
-		console.log(err);
-		res.send("you broke it .... /teams/:id DELETE");
+		req.flash("error", "Error deleting team")
+		res.redirect("back")
 	}
 })
 
