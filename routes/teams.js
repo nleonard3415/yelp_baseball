@@ -65,6 +65,19 @@ router.get("/search", async (req, res)=>{
 	}
 })
 
+//League
+router.get("/league/:league", async (req,res)=>{
+	const validLeagues = ["american league","national league"];
+	if(validLeagues.includes(req.params.league.toLowerCase())) {
+		const teams = await Team.find({league: req.params.league}).exec();
+		res.render("teams", {teams});
+	}else{
+		res.send("please enter a valid league")
+	}
+});
+
+
+
 router.get("/:id", async (req,res) =>{
 	try{
 		const team = await Team.findById(req.params.id).exec();
