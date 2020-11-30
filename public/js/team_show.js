@@ -5,20 +5,24 @@ const upvoteBtn = document.getElementById("upvote_btn");
 const downvoteBtn = document.getElementById("downvote_btn");
 
 
-
-
 //=======================
-//add event listeners
+//hgelper function
 //=======================
-upvoteBtn.addEventListener("click", async function() {
+const sendVote = async (voteType) =>{
 	const options = {
 		method: "POST",
 		headers: {
 			'Content-type': 'application/json'
-		},
-		body: JSON.stringify({vote: "up"})
+		}
 	}
 	
+	if(voteType === "up"){
+		options.body = JSON.stringify({vote: "up"});
+	}else if (voteType === "down"){
+		options.body = JSON.stringify({vote: "down"});
+	}else{
+		throw "voteType must be 'up' or 'down'"
+	}
 	await fetch("/teams/vote", options)
 	.then(data=>{
 		return data.json()
@@ -29,4 +33,15 @@ upvoteBtn.addEventListener("click", async function() {
 	.catch(err =>{
 		console.log(err)
 	})
+}
+
+//=======================
+//add event listeners
+//=======================
+upvoteBtn.addEventListener("click", async function() {
+	sendVote("up")
+})
+
+downvoteBtn.addEventListener("click", async function() {
+	sendVote("down")
 })
