@@ -79,6 +79,7 @@ router.get("/league/:league", async (req,res)=>{
 });
 
 router.post("/vote", isLoggedIn, (req,res)=>{
+	console.log(req.body);
 	res.json({
 		message:"voted!"
 	})
