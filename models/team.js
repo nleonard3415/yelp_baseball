@@ -16,7 +16,9 @@ const teamSchema = new mongoose.Schema({
 			ref: "User"
 		},
 		username: String
-	}
+	},
+	upvotes: [String],
+	downvotes: [String]
 });
 
 teamSchema.index({
