@@ -96,43 +96,45 @@ router.post("/vote", isLoggedIn, async (req,res)=>{
 		if(req.body.voteType === "up"){
 			team.upvotes.push(req.user.username)
 			team.save()
-			response.message = "Upvote tallied"
+			response = {message: "Upvote tallied", code: 1}
 		}else if (req.body.voteType === "down"){
 			team.downvotes.push(req.user.username)
 			team.save()
-			response.message = "Downvote tallied"
+			response = {message: "Upvote tallied", code: -1}
 		}else{
-			response.message = "error 1"
+			response = {message: "error 1", code: "err"}
 		}
 	}else if (alreadyUpvoted >= 0){//upvoted
 		if(req.body.voteType === "up"){
 			team.upvotes.splice(alreadyUpvoted, 1)
 			team.save()
-			response.message = "Upvote removed"
+			response = {message: "Upvote removed", code: 0}
 		}else if (req.body.voteType === "down"){
 			team.upvotes.splice(alreadyUpvoted, 1)
 			team.downvotes.push(req.user.username)
 			team.save()
-			response.message = "changed to downvote"
+			response = {message: "changed to downvote", code: -1}
 		}else{
-			response.message = "error 2"
+			response = {message: "error 2", code: "err"}
 		}
 	}else if (alreadyDownvoted >= 0){//downvoted
 		if(req.body.voteType === "up"){
 			team.downvotes.splice(alreadyDownvoted, 1)
 			team.upvotes.push(req.user.username)
 			team.save()
-			response.message = "changed to upvote"
+			response = {message: "changed to downvote", code: 1}
 		}else if (req.body.voteType === "down"){
 			team.downvotes.splice(alreadyDownvoted, 1)
 			team.save()
-			response.message = "remove downvote "
+			response = {message: "removed downvote", code: 0}
 		}else{
-			response.message = "error 3"
+			response = {message: "error 3", code: "err"}
 		}
 	}else{
-		response.message = "error 4"
+		response = {message: "error 4 ", code: "err"}
 	}
+	
+	response.score = team.upvotes.length - team.downvotes.length;
 	
 	
 	res.json(response);
