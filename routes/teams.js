@@ -87,8 +87,55 @@ router.post("/vote", isLoggedIn, async (req,res)=>{
 	// }
 	
 	const team = await Team.findById(req.body.teamId)
-	console.log(team);
-	res.json(team);
+	const alreadyUpvoted = team.upvotes.indexOf(req.user.username)  //will be -1 if not found
+	const alreadyDownvoted = team.downvotes.indexOf(req.user.username)  //will be -1 if not found
+	
+	let response = {}
+	//voting logic
+	if(alreadyUpvoted === -1 && alreadyDownvoted === -1){//hasnt voted
+		if(req.body.voteType === "up"){
+			team.upvotes.push(req.user.username)
+			team.save()
+			response.message = "Upvote tallied"
+		}else if (req.body.voteType === "down"){
+			team.downvotes.push(req.user.username)
+			team.save()
+			response.message = "Downvote tallied"
+		}else{
+			response.message = "error 1"
+		}
+	}else if (alreadyUpvoted >= 0){//upvoted
+		if(req.body.voteType === "up"){
+			team.upvotes.splice(alreadyUpvoted, 1)
+			team.save()
+			response.message = "Upvote removed"
+		}else if (req.body.voteType === "down"){
+			team.upvotes.splice(alreadyUpvoted, 1)
+			team.downvotes.push(req.user.username)
+			team.save()
+			response.message = "changed to downvote"
+		}else{
+			response.message = "error 2"
+		}
+	}else if (alreadyDownvoted >= 0){//downvoted
+		if(req.body.voteType === "up"){
+			team.downvotes.splice(alreadyDownvoted, 1)
+			team.upvotes.push(req.user.username)
+			team.save()
+			response.message = "changed to upvote"
+		}else if (req.body.voteType === "down"){
+			team.downvotes.splice(alreadyDownvoted, 1)
+			team.save()
+			response.message = "remove downvote "
+		}else{
+			response.message = "error 3"
+		}
+	}else{
+		response.message = "error 4"
+	}
+	
+	
+	res.json(response);
 })
 
 router.get("/:id", async (req,res) =>{
