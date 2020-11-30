@@ -78,7 +78,11 @@ router.get("/league/:league", async (req,res)=>{
 	}
 });
 
-
+router.post("/vote", isLoggedIn, (req,res)=>{
+	res.json({
+		message:"voted!"
+	})
+})
 
 router.get("/:id", async (req,res) =>{
 	try{
