@@ -149,8 +149,18 @@ router.get("/:id", async (req,res) =>{
 		console.log(err);
 		res.send("you broke it .... /teams/:id");
 	}
-	
 })
+
+ router.get("/:id/favTeam", async (req,res) =>{
+		try{
+			const team = await Team.findById(req.params.id).exec();
+			const comments = await Comment.find({teamId: req.params.id}).exec();
+			res.render("teams_show", {team, comments});
+		}catch(err){
+			console.log(err);
+			res.send("you broke it .... /teams/:id");
+		}
+ 	})
 
 router.get("/:id/edit", checkTeamOwner, async (req, res) =>{
 		const team = await Team.findById(req.params.id).exec();

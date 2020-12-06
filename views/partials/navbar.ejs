@@ -38,6 +38,11 @@
         		<a class="nav-link" href="/signup">Sign Up</a>
       		</li>
 		<%}%>
+		<li class="nav-item">
+			<% if(user){ %>
+			 <a class="nav-link" href="/teams/5fbb1287a850a10fda83a671/favTeam">Favorite team</a>
+			<%}%>
+		</li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="/teams/search" method="GET">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" name="term" aria-label="Search">

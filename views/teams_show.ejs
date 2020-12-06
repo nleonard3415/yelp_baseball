@@ -63,9 +63,12 @@
 			<% }else if(user){ %>
 				<button id="downvote_btn" class="btn btn-outline-danger btn-lg mt-3">-</button>
 			<% } %>
-			
-
 		</div>
+		<% if(user){ %>
+		<a id="favoriteBtn" href="/teams/<%= team._id %>/favTeam" class="col-3">
+			<button class="btn btn-warning btn-lg mb-3 mt-2 mx-3">Make Favorite Team</button>
+		</a>
+		<%}%>
 	</div>
 	
 	<% comments.forEach((comment =>{ %>
